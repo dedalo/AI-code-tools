@@ -29,19 +29,23 @@ const openai = new OpenAIApi(configuration);
 
 /**
  * This function sends a prompt to the OpenAI API and returns the response message.
- * @param codigo - The code to get documentation for.
+ * @param codigo - The code that the user wants to execute or get help with.
+ * @param [language=en] - The language parameter is a string that specifies the language of the prompt
+ * being sent to the OpenAI API. It has a default value of 'en' (English) but can be set to any
+ * language supported by the API.
  * @param [retries] - The number of times the function will retry the API request in case of failure.
- * It defaults to the value specified in the `config.openAiConfig.retries` variable.
- * @returns a string that is the response from the OpenAI API after sending a prompt message. If there
- * is an error with the API request, the function returns null.
+ * It is set to the value specified in the `config.openAiConfig.retries` variable.
+ * @returns a string that represents the response from the OpenAI API. If there is an error with the
+ * API request, it will return null.
  */
-async function createDoc(codigo, retries = config.openAiConfig.retries) {
-  const beforeCode = config.beforeCode;
-  const afterCode = config.afterCode;
+async function createDoc(codigo, language = 'en', retries = config.openAiConfig.retries) {
+  const beforeCode = config.prompt[language].beforeCode;
+  const afterCode = config.prompt[language].afterCode;
+  const systemContent = config.prompt[language].systemContent;
   
   let userMessage = beforeCode + codigo + afterCode;
   const messages = [
-    { role: 'system', content: config.systemContent },
+    { role: 'system', content: systemContent },
     { role: 'user', content: userMessage },
   ];
 
@@ -121,16 +125,17 @@ async function updateDoc(method, documentation) {
 }
 
 
+
 /* Uses the TypeScript compiler API to automatically generate
-documentation for TypeScript code. It takes a directory path as an argument, finds all TypeScript
-files in that directory and its subdirectories, and then iterates over all the classes, methods,
-properties, constructors, and members in those files. For each item that does not have any JSDoc
-comments or has comments that are empty, it generates documentation by passing the code to an
-external function called `createDoc()`. If the generated documentation is not empty, it updates the
-JSDoc comments for that item using the */
+documentation for TypeScript code. It takes a directory path as an argument and processes all
+TypeScript and TypeScript React files in that directory. For each file, it iterates over all the
+classes, properties, methods, constructors, and enum members, and checks if they have any existing
+documentation. If not, it generates documentation for them using an external API and updates the
+code with the new documentation. Finally, it saves the changes to the project. */
 (async () => {
   const project = new Project();
-  const dirPath = process.argv[2];
+  const dirPath = process.argv[2]; 
+  const language = process.argv[3] || 'en';
 
   if (!dirPath) {
     console.log('Use: node tsDocumenter.js <directory>');
@@ -150,8 +155,8 @@ JSDoc comments for that item using the */
         const documentation = method.getJsDocs().map(jsdoc => jsdoc.getText()).join('\n');
         if (!documentation || /^\s*$/.test(documentation)) {
           const code = method.getText();
-          if (code.length > config.minLength) { // Validate if the method has more than 100 characters
-            const newDocumentation = await createDoc(code);
+          if (code.length > config.minLength) { // Validate if the method has more than minLength
+            const newDocumentation = await createDoc(code, language);
             if (newDocumentation) {
               await updateDoc(method, newDocumentation);
             }
@@ -167,8 +172,8 @@ JSDoc comments for that item using the */
         const documentation = property.getJsDocs().map(jsdoc => jsdoc.getText()).join('\n');
         if (!documentation || /^\s*$/.test(documentation)) {
           const code = property.getText();
-          if (code.length > config.minLength) { // Validate if the property has more than 100 characters
-            const newDocumentation = await createDoc(code);
+          if (code.length > config.minLength) { // Validate if the property has more than minLength
+            const newDocumentation = await createDoc(code, language);
             if (newDocumentation) {
               await updateDoc(property, newDocumentation);
             }
@@ -184,8 +189,8 @@ JSDoc comments for that item using the */
         const documentation = constructor.getJsDocs().map(jsdoc => jsdoc.getText()).join('\n');
         if (!documentation || /^\s*$/.test(documentation)) {
           const code = constructor.getText();
-          if (code.length > config.minLength) { // Validate if the constructor has more than 100 characters
-            const newDocumentation = await createDoc(code);
+          if (code.length > config.minLength) { // Validate if the constructor has more than minLength
+            const newDocumentation = await createDoc(code, language);
             if (newDocumentation) {
               await updateDoc(constructor, newDocumentation);
             }
@@ -204,8 +209,8 @@ JSDoc comments for that item using the */
         const documentation = member.getJsDocs().map(jsdoc => jsdoc.getText()).join('\n');
         if (!documentation || /^\s*$/.test(documentation)) {
           const code = member.getText();
-          if (code.length > config.minLength) { // Validate if the member has more than 100 characters
-            const newDocumentation = await createDoc(code);
+          if (code.length > config.minLength) { // Validate if the member has more than minLength
+            const newDocumentation = await createDoc(code, language);
             if (newDocumentation) {
               await updateDoc(member, newDocumentation);
             }

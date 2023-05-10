@@ -43,10 +43,10 @@ Replace `your_openai_api_key` with your actual OpenAI API key.
 Run the TypeScript documentation generator with the following command:
 
 ```
-node tsDocumenter.js <directory>
+node tsDocumenter.js <directory> [language]
 ```
 
-Replace `<directory>` with the path to the directory containing your TypeScript files.
+Replace `<directory>` with the path to the directory containing your TypeScript files and `[language]` with the desired language code (e.g., `en` for English, `es` for Spanish). If the language code is not provided, it defaults to English.
 
 The generator will process all TypeScript files in the specified directory and its subdirectories, generating documentation for classes, methods, properties, constructors, and enum members.
 
