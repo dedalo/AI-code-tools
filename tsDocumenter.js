@@ -137,7 +137,8 @@ JSDoc comments for that item using the */
     process.exit(1);
   }
 
-  const files = project.addSourceFilesAtPaths(`${dirPath}/**/*.ts`);
+  const files = project.addSourceFilesAtPaths(`${dirPath}/**/*.{ts,tsx}`);
+
   for (const file of files) {
     console.log(`Processing file ${file.getFilePath()}`);
 
