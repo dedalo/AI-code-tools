@@ -1,0 +1,15 @@
+{
+    "beforeCode": "generar documentacion jsdoc con una descripción en español para el fragmento de código TypeScript.Solo contestar con la documentacion para el comienzo de la funcion",
+    "afterCode": "\nel codigo jsdoc comienza ahora",
+    "systemContent": "Eres un sistema generador de documentacion de codigo fuente, tus respuesta se usara como contenido a insertar dentro del codigo,  no realizar refactor ni mejoras, solo la documentacion generada en formato jsdoc, no regenerar el codigo con documentacion, solo contestar con la documentacion generada.",
+    "minLength": "20",
+    "openAiConfig": {
+      "model": "gpt-3.5-turbo",
+      "max_tokens": 3000,
+      "n": 1,
+      "stop": null,
+      "temperature": 0.7,
+      "retries": 1
+    }
+  }
+  
