@@ -1,0 +1,17 @@
+{
+  "prompt": {
+    "beforeCode": "Generate JSDoc documentation with a description in English for the TypeScript code fragment. Only provide the documentation for the beginning of the function:\n",
+    "afterCode": "\nThe JSDoc code begins now.",
+    "systemContent": "You are a source code documentation generator system. Your response will be used as content to be inserted into the code. Do not refactor or improve the code, just generate the documentation in JSDoc format. Do not regenerate the code with documentation, just provide the generated documentation."
+  },
+  "minLength": "20",
+  "openAiConfig": {
+    "model": "gpt-3.5-turbo",
+    "max_tokens": 3000,
+    "n": 1,
+    "stop": null,
+    "temperature": 0.7,
+    "retries": 1
+  }
+}
+  
