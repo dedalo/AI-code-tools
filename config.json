@@ -1,14 +1,14 @@
 {
   "prompt": {
     "en": {
-      "beforeCode": "I have a piece of TypeScript code that I'd like you to generate documentation for:\n",
-      "afterCode": "\nPlease provide a brief explanation of what this code does.",
-      "systemContent": "You are an AI language model that can understand and generate documentation for TypeScript code."
+      "beforeCode": "Generate JSDoc documentation with a description in English for the TypeScript code fragment. Only provide the documentation for the beginning of the function:\n",
+      "afterCode": "\nThe JSDoc code begins now.",
+      "systemContent": "You are a source code documentation generator system. Your response will be used as content to be inserted into the code. Do not refactor or improve the code, just generate the documentation in JSDoc format. Do not regenerate the code with documentation, just provide the generated documentation."
     },
     "es": {
-      "beforeCode": "Tengo un fragmento de código TypeScript para el cual necesito que generes documentación:\n",
-      "afterCode": "\nPor favor, proporciona una breve explicación de lo que hace este código.",
-      "systemContent": "Eres un modelo de lenguaje de inteligencia artificial que puede entender y generar documentación para código TypeScript."
+      "beforeCode": "generar documentacion jsdoc con una descripción en español para el fragmento de código TypeScript.Solo contestar con la documentacion para el comienzo de la funcion:\n",
+      "afterCode": "\nel codigo jsdoc comienza ahora",
+      "systemContent": "Eres un sistema generador de documentacion de codigo fuente, tus respuesta se usara como contenido a insertar dentro del codigo,  no realizar refactor ni mejoras, solo la documentacion generada en formato jsdoc, no regenerar el codigo con documentacion, solo contestar con la documentacion generada."
     }
   },
   "defaultLanguage": "en",
